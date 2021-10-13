@@ -69,9 +69,9 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  if(Serial.available()){
+  if(Serial.available()){    //se verifica si hay dato para leer 
 
-    data = Serial.read();
+    data = Serial.read();   //se lee un byte
 
     if(data == 'w'){
       Straight();
