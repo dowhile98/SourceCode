@@ -32,13 +32,13 @@
 #define IN41    GPIO_PIN_7
 
 //RED LEDS
-#define RED_PIN		GPIO_PIN_11
+#define RED_PIN		GPIO_PIN_9
 #define RED_PORT	GPIOE
 //BLUE LEDS
 #define BLUE_PIN 	GPIO_PIN_12
 #define BLUE_PORT	GPIOE
 //YELOW LEDS
-#define YELOW_PIN 	GPIO_PIN_9
+#define YELOW_PIN 	GPIO_PIN_11
 #define YELOW_PORT	GPIOE
 /***********FUNCTION PROTOTYPE***********************/
 /**

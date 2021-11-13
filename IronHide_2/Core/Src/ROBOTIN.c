@@ -179,12 +179,12 @@ void IronHide_setNumber(uint8_t num){
 	uint8_t i;
 	if(num == 0){
 		for(i = 0;i<8;i++){
-			sendDataSPI(i, NUMBERS[9][i]);
+			sendDataSPI(i+1, NUMBERS[9][i]);
 		}
 	}
 	else{
-		for(i = 0;i<8;i++){
-			sendDataSPI(i, NUMBERS[num-1][i]);
+		for(i = 1;i<9;i++){
+			sendDataSPI(i+1, NUMBERS[num-1][i]);
 		}
 	}
 	return;
@@ -196,7 +196,7 @@ float HCSR04_Read(void){
 	float diffCapture;
 	float timeUs;
 	float dist;
-	uint32_t TIM2_CLK = SystemCoreClock;
+	uint32_t TIM2_CLK = SystemCoreClock/2;
 	__HAL_TIM_SET_COUNTER(&htim2,0);					//reset CNT
 	HAL_TIM_Base_Start(&htim2);							//start input capture
 	/*generate pulse 10us*/
@@ -257,22 +257,22 @@ void IronHide_Init(void){
 	HAL_GPIO_WritePin(YELOW_PORT, YELOW_PIN,GPIO_PIN_RESET);
 
 	//probar la luz de la sirena
-	HAL_GPIO_WritePin(BLUE_PORT, YELOW_PIN,GPIO_PIN_SET);
-	HAL_GPIO_WritePin(RED_PORT, YELOW_PIN,GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(BLUE_PORT, BLUE_PIN,GPIO_PIN_SET);
+	HAL_GPIO_WritePin(RED_PORT, RED_PIN,GPIO_PIN_RESET);
 	HAL_Delay(100);
-	HAL_GPIO_WritePin(BLUE_PORT, YELOW_PIN,GPIO_PIN_RESET);
-	HAL_GPIO_WritePin(RED_PORT, YELOW_PIN,GPIO_PIN_SET);
+	HAL_GPIO_WritePin(BLUE_PORT, BLUE_PIN,GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(RED_PORT, RED_PIN,GPIO_PIN_SET);
 	HAL_Delay(50);
-	HAL_GPIO_WritePin(BLUE_PORT, YELOW_PIN,GPIO_PIN_SET);
-	HAL_GPIO_WritePin(RED_PORT, YELOW_PIN,GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(BLUE_PORT, BLUE_PIN,GPIO_PIN_SET);
+	HAL_GPIO_WritePin(RED_PORT, RED_PIN,GPIO_PIN_RESET);
 	HAL_Delay(100);
-	HAL_GPIO_WritePin(BLUE_PORT, YELOW_PIN,GPIO_PIN_RESET);
-	HAL_GPIO_WritePin(RED_PORT, YELOW_PIN,GPIO_PIN_SET);
+	HAL_GPIO_WritePin(BLUE_PORT, BLUE_PIN,GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(RED_PORT, RED_PIN,GPIO_PIN_SET);
 	HAL_Delay(50);
-	HAL_GPIO_WritePin(BLUE_PORT, YELOW_PIN,GPIO_PIN_SET);
-	HAL_GPIO_WritePin(RED_PORT, YELOW_PIN,GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(BLUE_PORT, BLUE_PIN,GPIO_PIN_SET);
+	HAL_GPIO_WritePin(RED_PORT, RED_PIN,GPIO_PIN_RESET);
 	HAL_Delay(100);
-	HAL_GPIO_WritePin(BLUE_PORT, YELOW_PIN,GPIO_PIN_RESET);
-	HAL_GPIO_WritePin(RED_PORT, YELOW_PIN,GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(BLUE_PORT, BLUE_PIN,GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(RED_PORT, RED_PIN,GPIO_PIN_RESET);
 	return;
 }
