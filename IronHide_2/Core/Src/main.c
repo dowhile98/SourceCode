@@ -45,6 +45,7 @@
 /* USER CODE BEGIN PM */
 uint8_t data;				//variable pare recibir datos por Bluetooth
 float distance;				//Leer la distancia del sensor HCS04 (ultrasonico)
+uint8_t stateSiren;			//estado de la sirena
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
@@ -97,11 +98,11 @@ int main(void)
   MX_SPI2_Init();
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
-  HAL_UART_Receive_IT(&huart1, &data, 1);
+
   MAX72xx_Init();								//configura la matriz de leds
   IronHide_setImage(11);						//borra la matriz de leds
   while(!(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0)));//presionar START BUTTON para continuar
-
+  HAL_UART_Receive_IT(&huart1, &data, 1);		//recibe datos bluetooth
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -124,10 +125,12 @@ int main(void)
 //		  HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_RESET);
 //		  HAL_Delay(300);
 //	  }
-
-
-
-
+	  if(stateSiren){			//enciende la sirena
+		  IronHide_Alarm();
+	  }else{					//apaga la sirena
+		  HAL_GPIO_WritePin(BLUE_PORT, BLUE_PIN,GPIO_PIN_RESET);
+		  HAL_GPIO_WritePin(RED_PORT, RED_PIN,GPIO_PIN_RESET);
+	  }
 
   }
   /* USER CODE END 3 */

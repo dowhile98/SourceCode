@@ -11,7 +11,7 @@
 
 extern uint8_t data;
 extern UART_HandleTypeDef huart1;
-
+extern uint8_t stateSiren;
 
 extern const uint8_t LETTERS[][8];
 extern const uint8_t NUMBERS[][8];
@@ -149,8 +149,14 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 	else if(data == 'S'){
 		stopMotor();
 		MAX72xx_putChar('x');
+	}else if(data == 'c'){
+		stateSiren = 1;
 	}
-	HAL_UART_Receive_IT(&huart1, &data, 1);
+	else if(data == 'z'){
+		stateSiren = 0;
+	}
+	HAL_GPIO_TogglePin(YELOW_PORT, YELOW_PIN);
+	HAL_UART_Receive_IT(&huart1, &data, 1);				//Recibir los datos bluetooth
 	return;
 }
 
@@ -274,5 +280,21 @@ void IronHide_Init(void){
 	HAL_Delay(100);
 	HAL_GPIO_WritePin(BLUE_PORT, BLUE_PIN,GPIO_PIN_RESET);
 	HAL_GPIO_WritePin(RED_PORT, RED_PIN,GPIO_PIN_RESET);
+	return;
+}
+
+/**
+ * @fn
+ * @brief
+ * @param []
+ * @return none
+ */
+void IronHide_Alarm(void){
+	HAL_GPIO_WritePin(BLUE_PORT, BLUE_PIN,GPIO_PIN_SET);
+	HAL_GPIO_WritePin(RED_PORT, RED_PIN,GPIO_PIN_RESET);
+	HAL_Delay(100);
+	HAL_GPIO_WritePin(BLUE_PORT, BLUE_PIN,GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(RED_PORT, RED_PIN,GPIO_PIN_SET);
+	HAL_Delay(50);
 	return;
 }

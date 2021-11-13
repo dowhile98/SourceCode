@@ -111,4 +111,14 @@ float HCSR04_Read(void);
  */
 void IronHide_Init(void);
 
+/**
+ * @fn
+ * @brief
+ * @param []
+ * @return none
+ */
+void IronHide_Alarm(void);
+
+
+
 #endif /* INC_ROBOTIN_H_ */
